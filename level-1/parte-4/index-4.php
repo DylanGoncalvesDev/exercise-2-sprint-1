@@ -23,19 +23,32 @@
 $countLimit = 0;
 $countInterval = 0;
 
-if (isset($_GET["limite"], $_GET["intervalo"])) {
-    $countLimit = $_GET["limite"];
-    $countInterval = $_GET["intervalo"];
-    
-    echo "El Conteo es: " . contador ($countLimit , $countInterval);
-}
-
-function contador($countLimit = 10, $countInterval) {
-  $count = 0;
+function contador($countInterval , $countLimit = 10) {
+  $count = "";
   for ($i= $countInterval; $i <= $countLimit; $i += $countInterval) { 
        $count .=  $i . " ";
   }
   return $count;
 }
+
+if ($_GET ["intervalo"] == "" && $_GET ["limite"] == "") { 
+    echo "<h2> Error no se han introducido los datos correctamente </h2>";
+
+} elseif (!empty($_GET ["intervalo"]) && $_GET ["intervalo"] > 0 && empty($_GET ["limite"])) {
+         $countInterval = (int) $_GET["intervalo"];
+         echo "El Conteo es: " . contador($countInterval);
+
+} elseif ((!empty($_GET ["intervalo"])) && !is_numeric($_GET ["intervalo"]) || (!empty($_GET["limite"])) && !is_numeric($_GET ["limite"])) {
+          echo "<h2> Error no se permiten letras </h2>";
+
+} elseif ($_GET ["intervalo"] <= 0 ) {
+    echo "<h2> Error no se puede contar si el intervalo es 0 </h2>";
+
+} else {
+   $countInterval = (int) $_GET["intervalo"];
+   $countLimit = (int) $_GET["limite"];
+   echo "El Conteo es: " . contador($countInterval, $countLimit);
+}
+
 ?> 
 

@@ -77,36 +77,39 @@ echo "<br> Producto de todas las Variables: " . $producto . "<br>";
 
 <?php
   // PROGRAMA CALCULADOR //
-if (isset($_GET["numero-1"], $_GET["numero-2"], $_GET["operacion"])) {
+function calculador ($num1 , $num2 , $op) { 
+    switch ($op) {
+      case 1 :
+          $resultado = "<h2> El resultado de la suma es: " . ($num1 + $num2) . "</h2>";
+          break;
+      case 2 :
+          $resultado = "<h2> El resultado de la resta es: " . ($num1 - $num2) . "</h2>";
+          break;
+      case 3 :
+          $resultado = "<h2> El resultado de la multiplicacion es: " . ($num1 * $num2) . "</h2>";
+          break;
+      case 4 :
+          if ($num2 == 0) {
+              $resultado = "<h2> Error: No se puede dividir por cero. </h2>";
+          } else {
+              $resultado = "<h2> El resultado de la division es: " . ($num1 / $num2) . "</h2>";
+          } 
+          break;      
+      }  
+   return $resultado;
+}
+
+if (isset($_GET["numero-1"], $_GET["numero-2"]) && is_numeric($_GET["numero-1"]) && is_numeric($_GET["numero-2"]) && isset($_GET["operacion"])) {
     $num1 = $_GET["numero-1"];
     $num2 = $_GET["numero-2"];
     $op = $_GET["operacion"];
 
     echo calculador($num1, $num2, $op);
+
+} else {
+    echo "<h2> Error Introduzca los datos Correctamente </h2>";
 }
 
-function calculador ($num1 , $num2 , $op) { 
-      switch ($op) {
-        case 1 : 
-            $resultado = "<h2> El resultado de la suma es: " . ($num1 + $num2) . "</h2>";
-            break;
-        case 2 :
-            $resultado = "<h2> El resultado de la resta es: " . ($num1 - $num2) . "</h2>";
-            break;
-        case 3 :
-            $resultado = "<h2> El resultado de la multiplicacion es: " . ($num1 * $num2) . "</h2>";
-            break;
-        case 4 :
-            if ($num2 == 0) {
-                $resultado = "Error: No se puede dividir por cero.";
-            } else {
-              $resultado = "<h2> El resultado de la division es: " . ($num1 / $num2) . "</h2>";
-            } 
-            break;
-        default :
-            $resultado = "Operacion no Valida";         
-      }  
-   return $resultado;
-}
+
 
 ?> 
